@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import java.nio.charset.Charset;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "com.wgcloud")
+@ComponentScan(basePackages = "com.vzcloud")
 @EnableCaching
 @EnableScheduling
 public class WgcloudServiceApplication {

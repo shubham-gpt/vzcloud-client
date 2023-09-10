@@ -18,3 +18,7 @@ base:
   bindIp: 192.168.1.2
   #Communication token, please keep consistent with the WGTOKEN configured on the server side
   wgToken: wgcloud
+mqtt:
+  minTaskTopic: min-task
+  agentInfoTopic: agent-info
+  brokerUrl: tcp://185.183.182.195

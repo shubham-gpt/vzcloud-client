@@ -42,8 +42,17 @@ public class ScheduledTask {
     private RestUtil restUtil;
     @Autowired
     private CommonConfig commonConfig;
+    @Autowired
+    private MqttUtil mqttUtil;
 
+    @Autowired
+    private MqttConfig mqttConfig;
     private SystemInfo systemInfo = null;
+
+    private void sendInfo(JSONObject jsonObject) {
+        // restUtil.post(commonConfig.getServerUrl() + "/wgcloud/agent/minTask", jsonObject);
+        mqttUtil.publish(mqttConfig.getMinTaskTopic(), jsonObject);
+    }
 
 
     /**
@@ -151,7 +160,7 @@ public class ScheduledTask {
             if (!StringUtils.isEmpty(logInfo.getInfoContent())) {
                 jsonObject.put("logInfo", logInfo);
             }
-            restUtil.post(commonConfig.getServerUrl() + "/wgcloud/agent/minTask", jsonObject);
+            sendInfo(jsonObject);
         }
 
     }
@@ -161,7 +170,7 @@ public class ScheduledTask {
      * Execute after 30Unit: MS.ds, execute every 5 minutes, Unit: MS.
      * Get the monitoring process
      */
-    @Scheduled(initialDelay = 28 * 1000L, fixedRate = 300 * 1000)
+//    @Scheduled(initialDelay = 28 * 1000L, fixedRate = 300 * 1000)
     public void appInfoListTask() {
         JSONObject jsonObject = new JSONObject();
         LogInfo logInfo = new LogInfo();
@@ -186,7 +195,7 @@ public class ScheduledTask {
             if (!StringUtils.isEmpty(logInfo.getInfoContent())) {
                 jsonObject.put("logInfo", logInfo);
             }
-            restUtil.post(commonConfig.getServerUrl() + "/wgcloud/agent/minTask", jsonObject);
+            sendInfo(jsonObject);
         }
     }
 
